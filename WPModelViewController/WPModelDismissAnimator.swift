@@ -15,9 +15,13 @@ class WPModelDismissAnimator: NSObject, UIViewControllerAnimatedTransitioning {
     }
     
     func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
-        guard let fromVC = transitionContext.viewController(forKey: .from) else {
+        guard let fromVC = transitionContext.viewController(forKey: .from),
+              let toVC = transitionContext.viewController(forKey: .to) else {
             return
         }
+        
+        let containView = transitionContext.containerView
+        containView.insertSubview(toVC.view, belowSubview: fromVC.view)
         
         let screenBounds = UIScreen.main.bounds
         let bottomLeftCorner = CGPoint(x: 0, y: screenBounds.height)
